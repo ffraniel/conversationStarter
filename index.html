@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class="no-js"> 
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vue.JS Socket.IO Chat</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="chat">
+      <h4 class="events" v-for="event in events"> {{ event }} </h4>
+      <h3 v-if="hasInputUsername" id="welcome">Welcome {{ username }}</h3>
+      <h6 id="connected">Online: 
+          <span >{{ users.length || 0}}</span>
+      </h6>
+      <ul class="username-list" v-for="user in users">
+        <li>{{ user }}</li>
+      </ul>
+      <ul id="messages" v-for="message in messages">
+        <li><span class="author">{{ message.author }}:</span> {{ message.content }}</li>
+      </ul>
+
+      <div class="set-username" v-bind:class="{ usernameOverlayGone: hasInputUsername }">
+
+          <form id="username-form" v-on:submit.prevent="chooseUsername">
+              <p>Choose an alias</p>
+              <h3>username {{ username }}</h3>
+              <input v-model="username" id="user-name-input" placeholder="type your username here">
+              <input type="submit" name="Select">
+          </form>
+      </div>
+
+      <form id="mainform" v-on:submit.prevent="sendMessage">
+          <input v-model="messageInput" id="m" autocomplete="off" placeholder="type your message here" />
+          <button>Send</button>
+      </form>
+    </div>
+
+    <script src="vue.js" defer></script>
+    <script src="script.js" defer></script>
+  </body>
+</html>
