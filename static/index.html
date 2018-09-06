@@ -15,15 +15,14 @@
       <h6 id="connected">Online: 
           <span >{{ users.length || 0}}</span>
       </h6>
-      <ul class="username-list" v-for="user in users">
-        <li>{{ user }}</li>
-      </ul>
+      <h5 class="username-list" >
+        <span v-for="user in users">{{ user + ", " }}</span>   
+      </h5>
       <ul id="messages" v-for="message in messages">
         <li><span class="author">{{ message.author }}:</span> {{ message.content }}</li>
       </ul>
 
       <div class="set-username" v-bind:class="{ usernameOverlayGone: hasInputUsername }">
-
           <form id="username-form" v-on:submit.prevent="chooseUsername">
               <p>Choose an alias</p>
               <h3>username {{ username }}</h3>
@@ -38,7 +37,8 @@
       </form>
     </div>
 
-    <script src="vue.js" defer></script>
-    <script src="script.js" defer></script>
+    <script src="vue.js"></script>
+    <script src="/socket.io/socket.io.js"></script>    
+    <script src="script.js"></script>
   </body>
 </html>
