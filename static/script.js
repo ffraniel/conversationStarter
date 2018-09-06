@@ -23,7 +23,9 @@ var app = new Vue({
     socket.on('send message', (message)=> {
       this.messages.push(message);
     })
-
+    socket.on('check users', () => {
+      socket.emit('update username list', this.username);
+    })
 
   },
   methods: {
@@ -31,7 +33,6 @@ var app = new Vue({
       if (this.username.length > 0) {
         this.hasInputUsername = true;
         socket.emit('set username', this.username);
-        // this.showInfo(`${this.username} chose a username.`)
       }
       else{
         this.showInfo("You need to add a username to proceed!");
@@ -39,15 +40,17 @@ var app = new Vue({
     },
 
     showInfo: function (event) {
-      this.events.push(event);
-      setTimeout(()=>{
-        this.events.pop();
-      }, 2000)
+      if(!this.events.includes(event)) {
+        this.events.push(event);
+        setTimeout(()=>{
+          this.events.pop();
+        }, 2000);
+      };
     },
 
     sendMessage: function () {
       if (this.messageInput.length < 1){  
-        this.showInfo("You can't send an empty message")
+        this.showInfo("You can't send an empty message!")
       }
       else {
         let message = {
