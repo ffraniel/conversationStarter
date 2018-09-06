@@ -20,6 +20,9 @@ var app = new Vue({
     socket.on('info', ((info) => {
       this.showInfo(info)
     }));
+    socket.on('send message', (message)=> {
+      this.messages.push(message);
+    })
 
 
   },
@@ -51,8 +54,8 @@ var app = new Vue({
           author: this.username,
           content: this.messageInput
         };
+        socket.emit('send message', message);
         this.messageInput = '';
-        this.messages.push(message);
       }
     },
   },

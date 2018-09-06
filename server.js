@@ -20,6 +20,10 @@ io.on('connection', (socket) => {
     io.emit('info', `${username} joined`)
   });
 
+  socket.on('send message', (message) => {
+    io.emit('send message', message);
+  })
+
   io.on('disconnect', () => {
     console.log("a user disconnected")
   });
