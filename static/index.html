@@ -25,15 +25,15 @@
       <div class="set-username" v-bind:class="{ usernameOverlayGone: hasInputUsername }">
           <form id="username-form" v-on:submit.prevent="chooseUsername">
               <p>Choose an alias</p>
-              <h3>username {{ username }}</h3>
-              <input v-model="username" id="user-name-input" placeholder="type your username here">
-              <input type="submit" name="Select">
+              <h3>Username: {{ username }}</h3>
+              <input v-model="username" class="username-input" placeholder="type your username here">
+              <input type="submit" name="Select" class="username-submit">
           </form>
       </div>
 
       <form id="mainform" v-on:submit.prevent="sendMessage">
-          <input v-model="messageInput" id="m" autocomplete="off" placeholder="type your message here" />
-          <button>Send</button>
+          <input v-model="messageInput" class="mainform-input" autocomplete="off" placeholder="type your message here" />
+          <button class="mainform-button">Send</button>
       </form>
     </div>
 
