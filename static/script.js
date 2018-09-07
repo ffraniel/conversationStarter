@@ -19,10 +19,15 @@ var app = new Vue({
     });
 
     socket.on('info', ((info) => {
-      this.showInfo(info);
+      if(this.hasInputUsername) {
+        this.showInfo(info);
+      }
+      
     }));
     socket.on('write info', (writeInfo) => {
-      this.showWriteInfo(writeInfo);
+      if(this.hasInputUsername) {
+        this.showWriteInfo(writeInfo);
+      }
     })
     socket.on('send message', (message)=> {
       this.messages.push(message);
@@ -52,12 +57,12 @@ var app = new Vue({
       };
     },
     showWriteInfo: function (writeEvent) {
-      if(this.lastWriteEvent !== writeEvent) {
+      if(this.lastWriteEvent != writeEvent) {
         let notice = {
-          author: 'info',
+          author: '**Info**',
           content: writeEvent
         };
-        socket.emit('send message', notice);
+        this.messages.push(notice);
         this.lastWriteEvent = writeEvent;
       }
 
