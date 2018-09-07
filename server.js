@@ -25,7 +25,8 @@ io.on('connection', (socket) => {
   socket.on('set username', (username) => {
     currentUsers.push(username);
     io.emit('get users', currentUsers);
-    io.emit('info', `${username} joined`)
+    io.emit('info', `${username} joined`);
+    io.emit('write info', `${username} joined`);
   });
 
   socket.on('send message', (message) => {
@@ -48,8 +49,7 @@ io.on('connection', (socket) => {
       let leaver = compareUsersToFindDisconnect(currentUsers, previousUsers);
       io.emit('get users', currentUsers);
       io.emit('info', `${leaver} left`);
+      io.emit('write info', `${leaver} left`);
     }, 1500)
-
   })
-
 });

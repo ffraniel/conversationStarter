@@ -9,6 +9,7 @@ var app = new Vue({
     messageInput: '',
     hasInputUsername: false,
     events: [],
+    lastWriteEvent: '',
   },
   mounted: function () {
     socket = io();   
@@ -18,8 +19,11 @@ var app = new Vue({
     });
 
     socket.on('info', ((info) => {
-      this.showInfo(info)
+      this.showInfo(info);
     }));
+    socket.on('write info', (writeInfo) => {
+      this.showWriteInfo(writeInfo);
+    })
     socket.on('send message', (message)=> {
       this.messages.push(message);
     })
@@ -46,6 +50,17 @@ var app = new Vue({
           this.events.pop();
         }, 2000);
       };
+    },
+    showWriteInfo: function (writeEvent) {
+      if(this.lastWriteEvent !== writeEvent) {
+        let notice = {
+          author: 'info',
+          content: writeEvent
+        };
+        socket.emit('send message', notice);
+        this.lastWriteEvent = writeEvent;
+      }
+
     },
 
     sendMessage: function () {
